@@ -1,0 +1,269 @@
+{
+    "properties": [
+      {
+        "property_id": 1,
+        "location": "Jwaneng",
+        "availability_type": "for_rent",
+        "house_type": {
+          "houseType": "Type 67",
+          "category": "Low Income",
+          "priceRange": {
+            "min": 2500,
+            "max": 2500
+          },
+          "builtUpArea": 67,
+          "plotSize": {
+            "min": 373,
+            "max": 787
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": false,
+          "floorFinish": "Vinyl",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": false,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      },
+      {
+        "property_id": 2,
+        "location": "Jwaneng",
+        "availability_type": "for_sale",
+        "house_type": {
+          "houseType": "Type 80",
+          "category": "Medium Income",
+          "priceRange": {
+            "min": 2800,
+            "max": 2800
+          },
+          "builtUpArea": 80,
+          "plotSize": {
+            "min": 512,
+            "max": 988
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": true,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      },
+      {
+        "property_id": 3,
+        "location": "Gaborone",
+        "availability_type": "for_rent",
+        "house_type": {
+          "houseType": "Type 90A",
+          "category": "Medium Income",
+          "priceRange": {
+            "min": 3000,
+            "max": 3000
+          },
+          "builtUpArea": 90,
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": true,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      },
+      {
+        "property_id": 4,
+        "location": "Francistown",
+        "availability_type": "for_sale",
+        "house_type": {
+          "houseType": "Type 170",
+          "category": "High Income",
+          "priceRange": {
+            "min": 5000,
+            "max": 5000
+          },
+          "builtUpArea": 170,
+          "plotSize": {
+            "min": 1002,
+            "max": 1332
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": true,
+          "carport": false,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": true,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": true,
+          "bathrooms": 2
+        }
+      },
+      {
+        "property_id": 5,
+        "location": "Serowe-Metsimasweu",
+        "availability_type": "for_rent",
+        "house_type": {
+          "houseType": "Type 120",
+          "category": "High Income",
+          "priceRange": {
+            "min": 5000,
+            "max": 5000
+          },
+          "builtUpArea": 120,
+          "plotSize": {
+            "min": 875,
+            "max": 1104
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": true,
+          "carport": false,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": true,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": true,
+          "bathrooms": 2
+        }
+      },
+      {
+        "property_id": 6,
+        "location": "Jwaneng",
+        "availability_type": "for_sale",
+        "house_type": {
+          "houseType": "Type 67",
+          "category": "Low Income",
+          "priceRange": {
+            "min": 2500,
+            "max": 2500
+          },
+          "builtUpArea": 67,
+          "plotSize": {
+            "min": 373,
+            "max": 787
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": false,
+          "floorFinish": "Vinyl",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": false,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      },
+      {
+        "property_id": 7,
+        "location": "Gaborone",
+        "availability_type": "for_rent",
+        "house_type": {
+          "houseType": "Type 80",
+          "category": "Medium Income",
+          "priceRange": {
+            "min": 2800,
+            "max": 2800
+          },
+          "builtUpArea": 80,
+          "plotSize": {
+            "min": 512,
+            "max": 988
+          },
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": true,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      },
+      {
+        "property_id": 8,
+        "location": "Francistown",
+        "availability_type": "for_sale",
+        "house_type": {
+          "houseType": "Type 90A",
+          "category": "Medium Income",
+          "priceRange": {
+            "min": 3000,
+            "max": 3000
+          },
+          "builtUpArea": 90,
+          "bedrooms": 3,
+          "furnished": false,
+          "fittedKitchen": true,
+          "wardrobes": true,
+          "garage": false,
+          "carport": true,
+          "floorFinish": "Ceramic",
+          "servantsQuarters": false,
+          "screenWall": false,
+          "fence": true,
+          "swimmingPool": false,
+          "scullery": false,
+          "fireplace": false,
+          "diningRoom": true,
+          "enSuite": false,
+          "bathrooms": 1
+        }
+      }
+    ]
+  }
+  

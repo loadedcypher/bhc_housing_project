@@ -2,75 +2,47 @@ import 'package:flutter/material.dart';
 
 class RoleBasedNavBar extends StatelessWidget {
   final String userType;
+  final int currentIndex;
+  final Function(int) onTap;
 
-  RoleBasedNavBar({required this.userType});
+  const RoleBasedNavBar({
+    Key? key,
+    required this.userType,
+    required this.currentIndex,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: _getNavBarItems(userType),
-    );
-  }
-
-  List<BottomNavigationBarItem> _getNavBarItems(String userType) {
-    List<BottomNavigationBarItem> items;
+    List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
+    ];
 
     if (userType == 'prospective_client') {
-      items = [
+      items.addAll([
+        const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Explore'),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard),
-          label: 'Dashboard',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.people),
-          label: 'Users',
-        ),
-      ];
+            icon: Icon(Icons.settings), label: 'General Enquiries'),
+      ]);
     } else if (userType == 'current_tenant') {
-      items = [
+      items.addAll([
         const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
+            icon: Icon(Icons.business), label: 'Business'),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ];
-    } else {
-      items = [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.info),
-          label: 'Info',
-        ),
-      ];
+            icon: Icon(Icons.school), label: 'School'),
+      ]);
     }
 
-    // Ensure there are always at least two items
+    // Ensure at least 2 items to prevent assertion error
     if (items.length < 2) {
-      items.add(const BottomNavigationBarItem(
-        icon: Icon(Icons.info),
-        label: 'Info',
-      ));
-
-      items.add(const BottomNavigationBarItem(
-        icon: Icon(Icons.polymer),
-        label: 'Polymer',
-      ));
+      return const Text('Loading....');
     }
 
-    return items;
+    return BottomNavigationBar(
+      items: items,
+      currentIndex: currentIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: onTap,
+    );
   }
 }

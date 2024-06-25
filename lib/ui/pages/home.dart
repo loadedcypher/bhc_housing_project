@@ -26,6 +26,8 @@ class _HomeState extends State<Home> {
 
     await authProvider.logout();
 
+    Navigator.pushReplacementNamed(context, '/login');
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Logged out")),
     );

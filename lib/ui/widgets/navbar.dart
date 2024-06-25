@@ -27,9 +27,9 @@ class RoleBasedNavBar extends StatelessWidget {
     } else if (userType == 'current_tenant') {
       items.addAll([
         const BottomNavigationBarItem(
-            icon: Icon(Icons.business), label: 'Business'),
+            icon: Icon(Icons.edit_document), label: 'Statements'),
         const BottomNavigationBarItem(
-            icon: Icon(Icons.school), label: 'School'),
+            icon: Icon(Icons.warning), label: 'Service Requests'),
       ]);
     }
 

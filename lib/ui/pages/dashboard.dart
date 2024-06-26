@@ -137,6 +137,11 @@ class Dashboard extends StatelessWidget {
           iconPath: 'lib/ui/assets/statements.png',
           // Remove color property as entire PNG will cover the card
         ),
+        const SizedBox(height: 16.0),
+        _buildServiceCard(
+          iconPath: 'lib/ui/assets/explore.png',
+          // Remove color property as entire PNG will cover the card
+        ),
       ],
     );
   }

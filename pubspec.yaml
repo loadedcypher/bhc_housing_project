@@ -28,4 +28,7 @@ flutter:
 
   assets:
     - lib/ui/assets/LOGO HQ WHITE.png
+    - lib/ui/assets/generalEnquiries.png
+    - lib/ui/assets/serviceRequest.png
+    - lib/ui/assets/statements.png
     - .env

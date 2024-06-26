@@ -6,6 +6,7 @@ class User {
   final String omangNumber;
   final String phoneNumber;
   final String userType;
+  final String? customerNumber;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -17,6 +18,7 @@ class User {
     required this.omangNumber,
     required this.phoneNumber,
     required this.userType,
+    this.customerNumber,
     this.createdAt,
     this.updatedAt,
   });
@@ -30,6 +32,7 @@ class User {
       omangNumber: json['omang_number'],
       phoneNumber: json['phone_number'],
       userType: json['user_type'],
+      customerNumber: json['customer_number'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -44,6 +47,7 @@ class User {
       'omang_number': omangNumber,
       'phone_number': phoneNumber,
       'user_type': userType,
+      'customer_number': customerNumber,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };

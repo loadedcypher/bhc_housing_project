@@ -19,6 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String userType = '';
+  String customerNumber = '';
   int _selectedIndex = 0;
 
   void _logout(BuildContext context) async {
@@ -38,6 +39,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     fetchUserType();
+    fetchCustomerNumber();
     SupabaseService.supabaseClient.auth.onAuthStateChange.listen((data) {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.signedOut) {
@@ -62,6 +64,23 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<void> fetchCustomerNumber() async {
+    final user = SupabaseService.supabaseClient.auth.currentUser;
+    if (user != null) {
+      final response = await SupabaseService.supabaseClient
+          .from('users')
+          .select('customer_number')
+          .eq('id', user.id)
+          .single();
+      print(response);
+      if (mounted) {
+        setState(() {
+          customerNumber = response['customer_number'];
+        });
+      }
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -77,22 +96,26 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // Define the pages based on user type
     List<Widget> _pagesProspectiveClient = [
-      const Dashboard(),
-      ExplorePage(),
+      Dashboard(
+        customerNumber: customerNumber,
+      ),
+      const ExplorePage(),
       const GeneralEnquiries(),
     ];
 
     List<Widget> _pagesCurrentTenant = [
-      const Dashboard(),
-      const StatementsPage(),
+      Dashboard(
+        customerNumber: customerNumber,
+      ),
+      StatementsScreen(customerNumber: customerNumber),
       const ServiceRequest(),
+      const GeneralEnquiries(),
     ];
 
     List<Widget> _pages = userType == 'prospective_client'
         ? _pagesProspectiveClient
         : _pagesCurrentTenant;
 
-    // Ensure at least 2 pages to prevent index errors
     if (_pages.length < 2) {
       _pages = [
         const Center(child: Text('Error Page')),
@@ -102,7 +125,6 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
         automaticallyImplyLeading: false,
         centerTitle: true,
         actions: [

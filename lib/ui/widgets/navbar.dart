@@ -22,7 +22,7 @@ class RoleBasedNavBar extends StatelessWidget {
       items.addAll([
         const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Explore'),
         const BottomNavigationBarItem(
-            icon: Icon(Icons.settings), label: 'General Enquiries'),
+            icon: Icon(Icons.info), label: 'General Enquiries'),
       ]);
     } else if (userType == 'current_tenant') {
       items.addAll([
@@ -30,6 +30,8 @@ class RoleBasedNavBar extends StatelessWidget {
             icon: Icon(Icons.edit_document), label: 'Statements'),
         const BottomNavigationBarItem(
             icon: Icon(Icons.warning), label: 'Service Requests'),
+        const BottomNavigationBarItem(
+            icon: Icon(Icons.info), label: 'General Enquiries')
       ]);
     }
 
@@ -39,6 +41,7 @@ class RoleBasedNavBar extends StatelessWidget {
     }
 
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: items,
       currentIndex: currentIndex,
       selectedItemColor: Colors.amber[800],

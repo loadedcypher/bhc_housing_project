@@ -264,6 +264,176 @@
           "bathrooms": 1
         }
       }
-    ]
+    ],
+  "user_property_details": [
+    {
+      "customer_number": "1001",
+      "address": "123 Main St, Gaborone",
+      "location": "Gaborone",
+      "date_registered": "2022-01-15",
+      "tenant_type": "rental",
+      "statement": {
+        "rental_statement": {
+          "Date Of Billing": "2023-06-01",
+          "Monthly Rent": 3000,
+          "Amounts Received": 3000,
+          "Outstanding Balance": 0
+        }
+      }
+    },
+    {
+      "customer_number": "1002",
+      "address": "456 Market St, Francistown",
+      "location": "Francistown",
+      "date_registered": "2023-03-22",
+      "tenant_type": "tps",
+      "statement": {
+        "tps_statement": {
+          "Date Of Sales": "2023-01-10",
+          "Sales Price": 120000,
+          "Loan Amount": 100000,
+          "Payback Period (months)": 240,
+          "Down Payment": 20000,
+          "Interest Rate (%)": 5,
+          "Monthly Installment": 800,
+          "Monthly Admin Charges": 50,
+          "Admin Charges": 1200,
+          "Finance Charges": 6000,
+          "Rental Billing": 0.00,
+          "Loan Billing": 0.00,
+          "Amounts Received": 2000,
+          "Other Charges": 0,
+          "Outstanding Balance As of": "2024-01-01",
+          "Balance": 98000
+        }
+      }
+    },
+    {
+      "customer_number": "0126",
+      "address": "789 Sunset Blvd, Serowe",
+      "location": "Serowe",
+      "date_registered": "2021-11-05",
+      "tenant_type": "rental",
+      "statement": {
+        "rental_statement": {
+          "Date Of Billing": "2023-05-01",
+          "Monthly Rent": 2500,
+          "Amounts Received": 2500,
+          "Outstanding Balance": 0
+        }
+      }
+    },
+    {
+      "customer_number": "1004",
+      "address": "1011 Pine St, Maun",
+      "location": "Maun",
+      "date_registered": "2022-08-17",
+      "tenant_type": "tps",
+      "statement": {
+        "tps_statement": {
+          "Date Of Sales": "2022-06-12",
+          "Sales Price": 150000,
+          "Loan Amount": 130000,
+          "Payback Period (months)": 180,
+          "Down Payment": 20000,
+          "Interest Rate (%)": 4.5,
+          "Monthly Installment": 950,
+          "Monthly Admin Charges": 60,
+          "Admin Charges": 1080,
+          "Finance Charges": 7200,
+          "Rental Billing": 0.00,
+          "Loan Billing": 0.00,
+          "Amounts Received": 2500,
+          "Other Charges": 0,
+          "Outstanding Balance As of": "2024-01-01",
+          "Balance": 125000
+        }
+      }
+    },
+    {
+      "customer_number": "1005",
+      "address": "1213 Maple Ave, Jwaneng",
+      "location": "Jwaneng",
+      "date_registered": "2023-02-12",
+      "tenant_type": "rental",
+      "statement": {
+        "rental_statement": {
+          "Date Of Billing": "2023-06-01",
+          "Monthly Rent": 3200,
+          "Amounts Received": 3200,
+          "Outstanding Balance": 0
+        }
+      }
+    },
+    {
+      "customer_number": "0035",
+      "address": "1415 Oak St, Ghanzi",
+      "location": "Ghanzi",
+      "date_registered": "2021-12-09",
+      "tenant_type": "tps",
+      "statement": {
+        "tps_statement": {
+          "Date Of Sales": "2021-10-15",
+          "Sales Price": 180000,
+          "Loan Amount": 160000,
+          "Payback Period (months)": 360,
+          "Down Payment": 20000,
+          "Interest Rate (%)": 4,
+          "Monthly Installment": 850,
+          "Monthly Admin Charges": 70,
+          "Admin Charges": 840,
+          "Finance Charges": 8400,
+          "Rental Billing": 0.00,
+          "Loan Billing": 0.00,
+          "Amounts Received": 3000,
+          "Other Charges": 0,
+          "Outstanding Balance As of": "2024-01-01",
+          "Balance": 158000
+        }
+      }
+    },
+    {
+      "customer_number": "1007",
+      "address": "1617 Cedar Rd, Lobatse",
+      "location": "Lobatse",
+      "date_registered": "2022-05-23",
+      "tenant_type": "rental",
+      "statement": {
+        "rental_statement": {
+          "Date Of Billing": "2023-06-01",
+          "Monthly Rent": 2800,
+          "Amounts Received": 2800,
+          "Outstanding Balance": 0
+        }
+      }
+    },
+    {
+      "customer_number": "1008",
+      "address": "1819 Birch Ln, Palapye",
+      "location": "Palapye",
+      "date_registered": "2023-04-30",
+      "tenant_type": "tps",
+      "statement": {
+        "tps_statement": {
+          "Date Of Sales": "2023-02-15",
+          "Sales Price": 200000,
+          "Loan Amount": 180000,
+          "Payback Period (months)": 300,
+          "Down Payment": 20000,
+          "Interest Rate (%)": 4.2,
+          "Monthly Installment": 920,
+          "Monthly Admin Charges": 80,
+          "Admin Charges": 960,
+          "Finance Charges": 9600,
+          "Rental Billing": 0.00,
+          "Loan Billing": 0.00,
+          "Amounts Received": 2500,
+          "Other Charges": 0,
+          "Outstanding Balance As of": "2024-01-01",
+          "Balance": 177500
+        }
+      }
+    }
+  ]
   }
   

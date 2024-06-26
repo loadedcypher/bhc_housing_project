@@ -3,6 +3,7 @@ import 'package:bhc_housing_project/ui/pages/home.dart';
 import 'package:bhc_housing_project/ui/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -77,11 +78,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             children: [
               ScaleTransition(
                 scale: _animation!,
-                child: Image.asset(
-                  'lib/ui/assets/LOGO HQ WHITE.png',
-                  height: 150.0, // Adjust the height of the logo
-                  width: 150.0, // Adjust the width of the logo
-                ),
+                child: SvgPicture.asset(
+          'lib/ui/assets/bhcWhiteHQ.svg',
+          width: 200,
+          height: 200,
+        ),
               ),
               const SizedBox(height: 20.0), // Spacer between logo and text
               const Text(

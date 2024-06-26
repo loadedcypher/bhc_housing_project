@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+    
+  flutter_svg: ^0.22.0
   cupertino_icons: ^1.0.6
   flutter_dotenv: ^5.1.0
   supabase_flutter: ^2.5.6
@@ -33,4 +34,6 @@ flutter:
     - lib/ui/assets/statements.png
     - lib/ui/assets/explore.png
     - lib/ui/assets/house.png
+    - lib/ui/assets/bhclogoHQ.svg
+    - lib/ui/assets/bhcWhiteHQ.svg
     - .env

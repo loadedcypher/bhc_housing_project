@@ -9,7 +9,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController? _controller;
   Animation<double>? _animation;
 
@@ -83,13 +84,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   width: 150.0, // Adjust the width of the logo
                 ),
               ),
-              const SizedBox(height: 20.0), // Spacer between logo and text
-              const Text(
-                'Powered by YGG',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              const SizedBox(height: 120.0), // Spacer between logo and text
+              const Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Text(
+                    'Powered by YGG',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],

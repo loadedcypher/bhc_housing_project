@@ -27,6 +27,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - lib/ui/assets/BHC HQ LOGO.png
     - lib/ui/assets/LOGO HQ WHITE.png
     - lib/ui/assets/generalEnquiries.png
     - lib/ui/assets/serviceRequest.png

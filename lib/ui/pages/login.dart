@@ -1,11 +1,12 @@
 import 'package:bhc_housing_project/providers/auth_provider.dart';
 import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:bhc_housing_project/ui/pages/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Sign in failed')),
+            const SnackBar(content: Text('Sign in failed')),
           );
         }
       } catch (e) {
@@ -60,84 +61,123 @@ class _LoginPageState extends State<LoginPage> {
           key: _formKey,
           child: ListView(
             children: [
-              Text(
-                'Login',
+              const Text(
+                'LogIn',
                 style: TextStyle(
                   color: Color(0xFFAC2324),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w900,
+                  height: 0.04,
                 ),
               ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Enter your email';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 40),
+              Image.asset(
+                'lib/ui/assets/BHC HQ LOGO.png',
+                height: 200,
+                width: 200,
               ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: _togglePasswordVisibility,
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    labelText: 'Email Address',
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your email';
+                    }
+                    return null;
+                  },
                 ),
-                obscureText: !_passwordVisible,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Enter your password';
-                  }
-                  return null;
-                },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: _togglePasswordVisibility,
+                    ),
+                  ),
+                  obscureText: !_passwordVisible,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your password';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   // Implement forgot password logic here
                 },
-                child: Text(
+                child: const Text(
                   'Forgot Password?',
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _signIn,
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Color(0xFFFAA21B); // Color when pressed
-                    }
-                    return Color(0xFFAC2324); // Default color
-                  }),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: ElevatedButton(
+                  onPressed: _signIn,
+                  style: ButtonStyle(
+                    backgroundColor:
+                        WidgetStateProperty.resolveWith<Color>((states) {
+                      if (states.contains(WidgetState.pressed)) {
+                        return const Color(0xFFFAA21B); // Color when pressed
+                      }
+                      return const Color(0xFFAC2324); // Default color
+                    }),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
               TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, '/signup'),
-                child: Text(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/signup'),
+                child: const Text(
                   "Haven't registered yet? Sign up now!",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                    color: Color(0xFFFAA21B),
+                    fontSize: 14,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 0.09,
+                  ),
                 ),
               ),
             ],

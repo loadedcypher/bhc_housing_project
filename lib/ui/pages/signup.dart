@@ -31,45 +31,51 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Signup', style: TextStyle(color: Color(0xFFAC2324)))),
+      appBar: AppBar(
+          title: const Text(
+        'Signup',
+        style: TextStyle(
+          color: Color(0xFFAC2324),
+          fontSize: 30,
+          fontWeight: FontWeight.w900,
+        ),
+      )),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
         child: Form(
           key: _formKey,
           child: ListView(
             children: [
-              Text(
-                'Signup',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFAC2324),
-                ),
+              const SizedBox(height: 40),
+              Image.asset(
+                'lib/ui/assets/BHC HQ LOGO.png',
+                height: 200,
+                width: 200,
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 40),
               TextFormField(
                 controller: _firstNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Enter your first name' : null,
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextFormField(
                 controller: _lastNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Enter your last name' : null,
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
@@ -81,10 +87,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextFormField(
                 controller: _omangNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Omang Number',
                   border: OutlineInputBorder(),
                 ),
@@ -102,10 +108,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextFormField(
                 controller: _phoneNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
                 ),
@@ -120,15 +126,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                       color: Colors.grey,
                     ),
                     onPressed: _togglePasswordVisibility,
@@ -138,23 +146,22 @@ class _SignupScreenState extends State<SignupScreen> {
                 validator: (value) =>
                     value!.isEmpty ? 'Enter your password' : null,
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               DropdownButtonFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'User Type',
                   border: OutlineInputBorder(),
                 ),
-                items: ['current_tenant', 'prospective_client']
+                items: ['Current_Tenant', 'Prospective_Client']
                     .map((type) =>
                         DropdownMenuItem(value: type, child: Text(type)))
                     .toList(),
-                validator: (value) =>
-                    value == null ? 'Select user type' : null,
+                validator: (value) => value == null ? 'Select user type' : null,
                 onChanged: (value) {
                   _userTypeController.text = value.toString();
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -190,24 +197,45 @@ class _SignupScreenState extends State<SignupScreen> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Color(0xFFFAA21B);
-                      }
-                      return Color(0xFFAC2324);
-                    },
+                  backgroundColor:
+                      WidgetStateProperty.resolveWith<Color>((states) {
+                    if (states.contains(WidgetState.pressed)) {
+                      return const Color(0xFFFAA21B); // Color when pressed
+                    }
+                    return const Color(0xFFAC2324); // Default color
+                  }),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
-                child: const Text(
-                  'Signup',
-                  style: TextStyle(color: Colors.white),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
+              const SizedBox(height: 5),
               TextButton(
                 onPressed: () =>
                     Navigator.pushReplacementNamed(context, '/login'),
-                child: const Text("Already Registered? Sign In!"),
+                child: const Text(
+                  "Already Registered? Sign In!",
+                  style: TextStyle(
+                    color: Color(0xFFFAA21B),
+                    fontSize: 14,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 0.09,
+                  ),
+                ),
               ),
             ],
           ),

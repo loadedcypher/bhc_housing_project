@@ -3,7 +3,7 @@ import 'package:bhc_housing_project/ui/pages/home.dart';
 import 'package:bhc_housing_project/ui/pages/login.dart';
 import 'package:bhc_housing_project/ui/pages/signup.dart';
 import 'package:bhc_housing_project/ui/pages/splash_screen.dart';
-import 'package:bhc_housing_project/ui/pages/faqs.dart';
+
 import 'package:bhc_housing_project/ui/pages/housingdevelopements.dart';
 import 'package:bhc_housing_project/ui/pages/eligibilitycriteria.dart';
 import 'package:bhc_housing_project/ui/pages/bhcproducts.dart';

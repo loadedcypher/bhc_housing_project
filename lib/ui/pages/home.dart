@@ -1,3 +1,4 @@
+
 import 'package:bhc_housing_project/providers/auth_provider.dart';
 import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:bhc_housing_project/ui/pages/dashboard.dart';
@@ -31,7 +32,6 @@ class _HomeState extends State<Home> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Logged out")),
     );
-    // Navigate to the login page or perform any other logout actions
   }
 
   @override
@@ -69,30 +69,23 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Define the pages based on user type
     List<Widget> _pagesProspectiveClient = [
-      const Dashboard(),
+      Dashboard(),
       ExplorePage(),
-      const GeneralEnquiries(),
+      GeneralEnquiries(),
     ];
 
     List<Widget> _pagesCurrentTenant = [
-      const Dashboard(),
-      const StatementsPage(),
-      const ServiceRequest(),
+      Dashboard(),
+      Statements(),
+      ServiceRequests(serviceRequests: [], onAddRequest: (ServiceRequest) {}),
     ];
 
     List<Widget> _pages = userType == 'prospective_client'
         ? _pagesProspectiveClient
         : _pagesCurrentTenant;
 
-    // Ensure at least 2 pages to prevent index errors
     if (_pages.length < 2) {
       _pages = [
         const Center(child: Text('Error Page')),
@@ -104,25 +97,17 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Home'),
         automaticallyImplyLeading: false,
-        centerTitle: true,
         actions: [
-          PopupMenuButton<String>(
-            onSelected: (String result) {
-              if (result == 'logout') {
-                _logout(context);
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'logout',
-                child: Text('Logout'),
-              ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => _logout(context),
           ),
         ],
+        backgroundColor: const Color(0xFFAC2324),
       ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: RoleBasedNavBar(
         userType: userType,
@@ -132,3 +117,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+

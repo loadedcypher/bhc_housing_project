@@ -31,4 +31,6 @@ flutter:
     - lib/ui/assets/generalEnquiries.png
     - lib/ui/assets/serviceRequest.png
     - lib/ui/assets/statements.png
+    - lib/ui/assets/explore.png
+    - lib/ui/assets/house.png
     - .env

@@ -13,7 +13,7 @@ class Property {
 
   factory Property.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      throw FormatException('Failed to load property: JSON is null');
+      throw const FormatException('Failed to load property: JSON is null');
     }
 
     return Property(
@@ -28,9 +28,9 @@ class Property {
 class HouseType {
   final String houseType;
   final String category;
-  final PriceRange? priceRange; // Make PriceRange nullable
+  final PriceRange? priceRange;
   final int builtUpArea;
-  final PlotSize? plotSize; // Make PlotSize nullable
+  final PlotSize? plotSize;
   final int bedrooms;
   final bool furnished;
   final bool fittedKitchen;
@@ -74,7 +74,7 @@ class HouseType {
 
   factory HouseType.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      throw FormatException('Failed to load house type: JSON is null');
+      throw const FormatException('Failed to load house type: JSON is null');
     }
 
     return HouseType(
@@ -118,7 +118,7 @@ class PriceRange {
 
   factory PriceRange.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      throw FormatException('Failed to load price range: JSON is null');
+      throw const FormatException('Failed to load price range: JSON is null');
     }
 
     return PriceRange(
@@ -139,7 +139,7 @@ class PlotSize {
 
   factory PlotSize.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      throw FormatException('Failed to load plot size: JSON is null');
+      throw const FormatException('Failed to load plot size: JSON is null');
     }
 
     return PlotSize(

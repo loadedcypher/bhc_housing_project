@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.signedOut) {
         fetchUserType();
+        fetchCustomerNumber();
       }
     });
   }
@@ -96,17 +97,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // Define the pages based on user type
     List<Widget> _pagesProspectiveClient = [
-      Dashboard(
-        customerNumber: customerNumber,
-      ),
+      Dashboard(),
       const ExplorePage(),
       const GeneralEnquiries(),
     ];
 
     List<Widget> _pagesCurrentTenant = [
-      Dashboard(
-        customerNumber: customerNumber,
-      ),
+      Dashboard(),
       StatementsScreen(customerNumber: customerNumber),
       const ServiceRequest(),
       const GeneralEnquiries(),
@@ -116,6 +113,7 @@ class _HomeState extends State<Home> {
         ? _pagesProspectiveClient
         : _pagesCurrentTenant;
 
+    // Ensure at least 2 pages to prevent index errors
     if (_pages.length < 2) {
       _pages = [
         const Center(child: Text('Error Page')),
@@ -125,6 +123,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(userType),
         automaticallyImplyLeading: false,
         centerTitle: true,
         actions: [

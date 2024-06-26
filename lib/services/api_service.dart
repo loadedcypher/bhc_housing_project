@@ -3,7 +3,7 @@ import 'package:bhc_housing_project/models/property.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://10.65.1.6:3000';
+  static const String baseUrl = 'http://192.168.0.199:3000';
 
   static Future<List<Property>> fetchProperties() async {
     try {

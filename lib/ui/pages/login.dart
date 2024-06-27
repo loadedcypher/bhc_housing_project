@@ -18,20 +18,36 @@ class _LoginPageState extends State<LoginPage> {
 
   final _passwordController = TextEditingController();
 
+  bool _passwordVisible = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
   Future<void> _signIn() async {
-    try {
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final response = await authProvider.signInWithEmail(
-          _emailController.text, _passwordController.text);
-      if (response.user != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const Home()),
+    if (_formKey.currentState!.validate()) {
+      try {
+        final authProvider = Provider.of<AuthProvider>(context, listen: false);
+        final response = await authProvider.signInWithEmail(
+          _emailController.text.trim(),
+          _passwordController.text,
+        );
+        if (response.user != null) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const Home()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Sign in failed')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Sign in failed: $e')),
         );
       }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign in failed: $e')),
-      );
     }
   }
 
@@ -44,28 +60,86 @@ class _LoginPageState extends State<LoginPage> {
           key: _formKey,
           child: ListView(
             children: [
+              Text(
+                'Login',
+                style: TextStyle(
+                  color: Color(0xFFAC2324),
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter your email' : null,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter your email';
+                  }
+                  return null;
+                },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter your password' : null,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: _togglePasswordVisibility,
+                  ),
+                ),
+                obscureText: !_passwordVisible,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter your password';
+                  }
+                  return null;
+                },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  // Implement forgot password logic here
+                },
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _signIn,
-                child: const Text('Sign In'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Color(0xFFFAA21B); // Color when pressed
+                    }
+                    return Color(0xFFAC2324); // Default color
+                  }),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
+              SizedBox(height: 20),
               TextButton(
-                  onPressed: () =>
-                      Navigator.pushReplacementNamed(context, '/signup'),
-                  child: const Text("Haven't registered yet? Sign up now!"))
+                onPressed: () => Navigator.pushReplacementNamed(context, '/signup'),
+                child: Text(
+                  "Haven't registered yet? Sign up now!",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
             ],
           ),
         ),

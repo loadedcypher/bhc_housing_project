@@ -91,17 +91,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Widget> _pagesProspectiveClient = [
       Dashboard(),
-      const ExplorePage(),
+      ExplorePage(),
       GeneralEnquiries(),
     ];
 
     List<Widget> _pagesCurrentTenant = [
-      const Dashboard(),
-      StatementsScreen(
-        customerNumber: customerNumber,
-      ),
-      ServiceRequest(),
-      GeneralEnquiries(),
+      Dashboard(),
+      Statements(),
+      ServiceRequests(serviceRequests: [], onAddRequest: (ServiceRequest) {}),
     ];
 
     List<Widget> _pages = userType == 'prospective_client'

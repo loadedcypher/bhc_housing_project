@@ -4,7 +4,6 @@ import 'package:bhc_housing_project/ui/pages/service_requests.dart';
 import 'package:bhc_housing_project/ui/pages/explore.dart';
 import 'package:bhc_housing_project/ui/pages/statements.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
   final String userName;

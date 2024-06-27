@@ -34,4 +34,5 @@ flutter:
     - lib/ui/assets/statements.png
     - lib/ui/assets/explore.png
     - lib/ui/assets/house.png
+    - lib/ui/assets/BHC HQ LOGO.png
     - .env

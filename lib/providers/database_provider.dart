@@ -1,3 +1,4 @@
+import 'package:bhc_housing_project/models/service_request.dart';
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import '../models/user.dart';
@@ -34,5 +35,16 @@ class DatabaseProvider with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<void> makeServiceRequest(ServiceRequest serviceRequest) async {
+    await _databaseService.insertServiceRequest(serviceRequest);
+    notifyListeners();
+  }
+
+  Future<List<ServiceRequest>> fetchServiceRequests() async {
+    final response = await _databaseService.getServiceRequests();
+
+    return response;
   }
 }

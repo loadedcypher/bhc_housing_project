@@ -6,8 +6,7 @@ class GeneralEnquiries extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('General Enquiries'),
-        backgroundColor: const Color(0xFFAC2324),
-        foregroundColor: const Color(0xFFFFFFFF), // Accent color
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

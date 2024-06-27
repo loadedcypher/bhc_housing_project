@@ -1,5 +1,6 @@
 // This module is used for handling the supabase auth services.
 
+import 'package:bhc_housing_project/models/service_request.dart';
 import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

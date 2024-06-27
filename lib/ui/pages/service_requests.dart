@@ -1,32 +1,49 @@
-import 'package:bhc_housing_project/models/service_requests.dart';
-import 'package:bhc_housing_project/ui/pages/servicereqform.dart';
 import 'package:flutter/material.dart';
+import 'package:bhc_housing_project/models/service_request.dart';
+import 'package:bhc_housing_project/ui/pages/servicereqform.dart';
 
-class ServiceRequests extends StatelessWidget {
+class ServiceRequests extends StatefulWidget {
   final List<ServiceRequest> serviceRequests;
   final Function(ServiceRequest) onAddRequest;
 
-  const ServiceRequests({super.key, required this.serviceRequests, required this.onAddRequest});
+  const ServiceRequests({
+    super.key,
+    required this.serviceRequests,
+    required this.onAddRequest,
+  });
+
+  @override
+  _ServiceRequestsState createState() => _ServiceRequestsState();
+}
+
+class _ServiceRequestsState extends State<ServiceRequests> {
+  List<ServiceRequest> _serviceRequests = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _serviceRequests = widget.serviceRequests;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Service Requests'),
-        backgroundColor: const Color(0xFFAC2324),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: serviceRequests.length,
+          itemCount: _serviceRequests.length,
           itemBuilder: (context, index) {
-            final request = serviceRequests[index];
+            final request = _serviceRequests[index];
             return _buildServiceRequestCard(
               context,
               type: request.type,
-              description: request.description,
+              description: request.description ?? 'No description provided',
               status: request.status,
-              referenceNumber: request.referenceNumber,
+              referenceNumber: request.reference_number,
             );
           },
         ),
@@ -40,7 +57,10 @@ class ServiceRequests extends StatelessWidget {
             ),
           );
           if (newRequest != null) {
-            onAddRequest(newRequest);
+            widget.onAddRequest(newRequest);
+            setState(() {
+              _serviceRequests.add(newRequest);
+            });
           }
         },
         backgroundColor: const Color(0xFFAC2324),
@@ -69,7 +89,7 @@ class ServiceRequests extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.warning, // Change icon based on type
+                  Icons.warning,
                   size: 40.0,
                   color: Color(0xFFAC2324),
                 ),

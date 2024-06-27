@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String userType = '';
-  String customerNumber = '';
+  String customerNumber = "";
   int _selectedIndex = 0;
 
   void _logout(BuildContext context) async {
@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
       print(response);
       if (mounted) {
         setState(() {
-          customerNumber = response['customer_number'];
+          customerNumber = response['customer_number']!;
         });
       }
     }
@@ -97,8 +97,9 @@ class _HomeState extends State<Home> {
 
     List<Widget> _pagesCurrentTenant = [
       Dashboard(),
-      Statements(),
+      StatementsScreen(customerNumber: customerNumber),
       ServiceRequests(serviceRequests: [], onAddRequest: (ServiceRequest) {}),
+      GeneralEnquiries()
     ];
 
     List<Widget> _pages = userType == 'prospective_client'
@@ -114,7 +115,8 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(userType),
+        title: Text("BHC House Management"),
+        centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -122,7 +124,6 @@ class _HomeState extends State<Home> {
             onPressed: () => _logout(context),
           ),
         ],
-        backgroundColor: const Color(0xFFAC2324),
       ),
       body: IndexedStack(
         index: _selectedIndex,

@@ -1,6 +1,11 @@
-import 'package:bhc_housing_project/models/service_requests.dart';
+import 'package:bhc_housing_project/models/service_request.dart';
+import 'package:bhc_housing_project/providers/database_provider.dart';
+import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
+
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ServiceReqFormPage extends StatefulWidget {
   const ServiceReqFormPage({super.key});
@@ -14,6 +19,8 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
   String _selectedFaultType = 'Electrical';
   String? _selectedFaultDetail;
   String? _description;
+
+  final user = SupabaseService.supabaseClient.auth.currentUser;
 
   final Map<String, List<String>> _faultDetails = {
     'Electrical': [
@@ -47,16 +54,21 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
         6, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
   }
 
-  void _submitForm() {
+  void _submitForm() async {
+    final databaseProvider =
+        Provider.of<DatabaseProvider>(context, listen: false);
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
       final referenceNumber = _generateReferenceNumber();
       final newRequest = ServiceRequest(
-        type: _selectedFaultType,
-        description: _description ?? '',
-        status: 'Pending',
-        referenceNumber: referenceNumber,
-      );
+          type: _selectedFaultType,
+          description: _description ?? '',
+          detail: _description!,
+          status: 'Pending',
+          reference_number: referenceNumber,
+          user_id: user!.id);
+
+      await databaseProvider.makeServiceRequest(newRequest);
 
       showDialog(
         context: context,

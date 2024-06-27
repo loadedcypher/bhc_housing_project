@@ -1,11 +1,12 @@
-
+import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:bhc_housing_project/ui/pages/general_enquiries.dart';
 import 'package:bhc_housing_project/ui/pages/service_requests.dart';
-import 'package:bhc_housing_project/ui/pages/statements.dart';
 import 'package:bhc_housing_project/ui/pages/explore.dart';
+import 'package:bhc_housing_project/ui/pages/statements.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   final String userName;
   final String? propertyPlotNumber;
   final String? propertyRegion;
@@ -13,19 +14,38 @@ class Dashboard extends StatelessWidget {
 
   const Dashboard({
     Key? key,
-    this.userName = 'Guest', 
+    this.userName = 'Guest',
     this.propertyPlotNumber,
     this.propertyRegion,
     this.propertyLocation,
   }) : super(key: key);
 
   @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  String customerNumber = "";
+  Future<void> fetchCustomerNumber() async {
+    final user = SupabaseService.supabaseClient.auth.currentUser;
+    if (user != null) {
+      final response = await SupabaseService.supabaseClient
+          .from('users')
+          .select('customer_number')
+          .eq('id', user.id)
+          .single();
+      print(response);
+      if (mounted) {
+        setState(() {
+          customerNumber = response['customer_number'];
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: const Color(0xFFAC2324),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -55,7 +75,7 @@ class Dashboard extends StatelessWidget {
           children: [
             const TextSpan(text: 'Welcome, '),
             TextSpan(
-              text: userName,
+              text: widget.userName,
               style: const TextStyle(color: Color(0xFFAC2324)),
             ),
             const TextSpan(text: '!'),
@@ -98,9 +118,9 @@ class Dashboard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  'Plot Number: $propertyPlotNumber\n'
-                  'Region: $propertyRegion\n'
-                  'Location: $propertyLocation',
+                  'Plot Number: ${widget.propertyPlotNumber}\n'
+                  'Region: ${widget.propertyRegion}\n'
+                  'Location: ${widget.propertyLocation}',
                   style: const TextStyle(
                     fontSize: 12.0,
                     color: Colors.white,
@@ -164,7 +184,7 @@ class Dashboard extends StatelessWidget {
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/statements.png',
-          destination: Statements(),
+          destination: StatementsScreen(customerNumber: customerNumber),
         ),
         const SizedBox(height: 16.0),
         _buildServiceCard(
@@ -177,10 +197,10 @@ class Dashboard extends StatelessWidget {
   }
 
   Widget _buildServiceCard(
-      BuildContext context, {
-        required String iconPath,
-        required Widget destination,
-      }) {
+    BuildContext context, {
+    required String iconPath,
+    required Widget destination,
+  }) {
     return GestureDetector(
       onTap: () {
         Navigator.push(

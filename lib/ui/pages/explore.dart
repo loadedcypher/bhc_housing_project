@@ -72,10 +72,14 @@ class _ExplorePageState extends State<ExplorePage> {
               itemBuilder: (context, index) {
                 final property = filteredProperties[index];
                 return Card(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
                   child: ListTile(
-                    title: Text(property.houseType.houseType),
+                    title: Text(property.houseType.houseType,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Text(
-                        '${property.houseType.category} - ${property.availabilityType}'),
+                        '${property.houseType.category} - ${property.availabilityType.capitalize()}'),
+                    trailing: const Icon(Icons.arrow_forward),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -93,5 +97,11 @@ class _ExplorePageState extends State<ExplorePage> {
         },
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
   }
 }

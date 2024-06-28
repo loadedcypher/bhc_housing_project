@@ -4,8 +4,6 @@ import 'package:bhc_housing_project/ui/widgets/CompanyLeaseApplicationForm.dart'
 import 'package:bhc_housing_project/ui/widgets/CompanySaleApplicationForm.dart';
 import 'package:bhc_housing_project/ui/widgets/IndividualLeaseApplicationForm.dart';
 import 'package:bhc_housing_project/ui/widgets/IndividualSaleApplicationForm.dart';
-import 'package:flutter/material.dart';
-import 'package:bhc_housing_project/models/property.dart';
 
 class PropertyDetailScreen extends StatelessWidget {
   final Property property;
@@ -109,67 +107,81 @@ class PropertyDetailScreen extends StatelessWidget {
   }
 
   Widget _buildApplyButton(BuildContext context) {
+    bool isForRent = property.availabilityType == 'for_rent';
+    bool isForSale = property.availabilityType == 'for_sale';
+
     return SizedBox(
       width: double.infinity,
-      child: Column(children: [
-        ElevatedButton(
-          onPressed: () {
-            showIndividualLeaseApplicationDialog(context);
-          },
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFAC2324),
-              foregroundColor: Color(0xFFFAA21B) // Button background color
-              ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply To Rent as An Individualy',
-                style: TextStyle(fontSize: 16)),
+      child: Column(
+        children: [
+          if (isForRent) ...[
+            _buildStyledButton(
+              context,
+              'Apply To Rent as An Individual',
+              Color(0xFFAC2324),
+              Color(0xFFFAA21B),
+              showIndividualLeaseApplicationDialog,
+            ),
+            const SizedBox(height: 10.0),
+            _buildStyledButton(
+              context,
+              'Apply to Rent as a Company',
+              Color(0xFFFAA21B),
+              Color(0xFFAC2324),
+              showCompanyLeaseApplicationDialog,
+            ),
+            const SizedBox(height: 10.0),
+          ],
+          if (isForSale) ...[
+            _buildStyledButton(
+              context,
+              'Apply to Buy as an Individual',
+              Color(0xFFAC2324),
+              Color(0xFFFAA21B),
+              showPersonalApplicationFormDialog,
+            ),
+            const SizedBox(height: 10.0),
+            _buildStyledButton(
+              context,
+              'Apply to Buy as a Company',
+              Color(0xFFFAA21B),
+              Color(0xFFAC2324),
+              showCompanySalesApplicationFormDialog,
+            ),
+            const SizedBox(height: 10.0),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStyledButton(
+    BuildContext context,
+    String text,
+    Color backgroundColor,
+    Color foregroundColor,
+    Function(BuildContext) onPressed,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: ElevatedButton(
+        onPressed: () => onPressed(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            showCompanyLeaseApplicationDialog(context);
-          },
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFFAA21B),
-              foregroundColor: Color(0xFFAC2324) // Button background color
-              ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply to Rent as a Company',
-                style: TextStyle(fontSize: 16)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            showPersonalApplicationFormDialog(context);
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply to Buy as an Individual',
-                style: TextStyle(fontSize: 16)),
-          ),
-        ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            showCompanySalesApplicationFormDialog(context);
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply to Buy as a Company',
-                style: TextStyle(fontSize: 16)),
-          ),
-        ),
-      ]),
+      ),
     );
   }
 }

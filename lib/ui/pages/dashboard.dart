@@ -25,7 +25,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   String customerNumber = "";
-  String name = ""; // Ensure this is initialized with an empty string
+  String name = "";
+  String userType = "";
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _DashboardState extends State<Dashboard> {
   Future<void> fetchCustomerDetails() async {
     await fetchCustomerName();
     await fetchCustomerNumber();
+    await fetchUserType();
   }
 
   Future<void> fetchCustomerNumber() async {
@@ -72,6 +74,23 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  Future<void> fetchUserType() async {
+    final user = SupabaseService.supabaseClient.auth.currentUser;
+    if (user != null) {
+      final response = await SupabaseService.supabaseClient
+          .from('users')
+          .select('user_type')
+          .eq('id', user.id)
+          .single();
+      print(response);
+      if (mounted) {
+        setState(() {
+          userType = response['user_type'];
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +101,10 @@ class _DashboardState extends State<Dashboard> {
           children: [
             _buildGreeting(),
             const SizedBox(height: 16.0),
-            _buildPropertyCard(),
+            if (userType == 'current_tenant')
+              _buildPropertyCard()
+            else
+              _buildFindAHomeText(),
             const SizedBox(height: 16.0),
             _buildDividerWithText('Management Tools'),
             const SizedBox(height: 16.0),
@@ -190,6 +212,18 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
+  Widget _buildFindAHomeText() {
+    return Text(
+      'Find a home now!',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
   Widget _buildDividerWithText(String text) {
     return Column(
       children: [
@@ -220,13 +254,16 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildCardsColumn(BuildContext context) {
-    return Column(
-      children: [
-        _buildServiceCard(
-          context,
-          iconPath: 'lib/ui/assets/generalEnquiries.png',
-          destination: GeneralEnquiries(),
-        ),
+    List<Widget> cards = [
+      _buildServiceCard(
+        context,
+        iconPath: 'lib/ui/assets/generalEnquiries.png',
+        destination: GeneralEnquiries(),
+      ),
+    ];
+
+    if (userType == 'current_tenant') {
+      cards.addAll([
         SizedBox(height: 10.0),
         _buildServiceCard(
           context,
@@ -242,13 +279,20 @@ class _DashboardState extends State<Dashboard> {
           iconPath: 'lib/ui/assets/statements.png',
           destination: StatementsScreen(customerNumber: customerNumber),
         ),
+      ]);
+    } else if (userType == 'prospective_client') {
+      cards.addAll([
         SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/explore.png',
           destination: ExplorePage(),
         ),
-      ],
+      ]);
+    }
+
+    return Column(
+      children: cards,
     );
   }
 

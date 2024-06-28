@@ -44,6 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Signup',
           style: TextStyle(
@@ -192,8 +193,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   labelText: 'User Type',
                   border: OutlineInputBorder(),
                 ),
-                value: _isCurrentTenant ? 'Current_Tenant' : null,
-                items: ['Current_Tenant', 'Prospective_Client']
+                value: _isCurrentTenant ? 'current_tenant' : null,
+                items: ['current_tenant', 'prospective_client']
                     .map((type) =>
                         DropdownMenuItem(value: type, child: Text(type)))
                     .toList(),
@@ -241,8 +242,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           omangNumber: _omangNumberController.text,
                           phoneNumber: _phoneNumberController.text,
                           userType: _isCurrentTenant
-                              ? 'Current_Tenant'
-                              : 'Prospective_Client',
+                              ? 'current_tenant'
+                              : 'prospective_client',
                           customerNumber: _isCurrentTenant
                               ? _customerNumberController.text
                               : null,

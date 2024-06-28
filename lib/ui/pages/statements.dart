@@ -112,7 +112,8 @@ class _StatementsScreenState extends State<StatementsScreen> {
         _buildCard('Payback Period (months)',
             tpsStatement['Payback Period (months)'].toString()),
         _buildCard('Down Payment', tpsStatement['Down Payment'].toString()),
-        _buildCard('Interest Rate (%)', tpsStatement['Interest Rate (%)']),
+        _buildCard(
+            'Interest Rate (%)', tpsStatement['Interest Rate (%)'].toString()),
         _buildCard('Monthly Installment',
             tpsStatement['Monthly Installment'].toString()),
         _buildCard('Monthly Admin Charges',

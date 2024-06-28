@@ -36,6 +36,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Explore'), // App bar background color
         actions: [
           DropdownButton<String>(

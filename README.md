@@ -1,14 +1,28 @@
-# bhc_housing_project
+This README file provides instructions on how to run a Flutter app and to view the currently hosted JSON-server. Please follow the steps below to ensure a successful setup and execution.
 
-## File Structure
+## Flutter App
 
-- __lib/config__ :  contains define our config files and env variables
-- __lib/models__ : contains our classes
-- __lib/ui/pages__ : contains the different pages in our app.
-- __lib/ui/widgets__ : contains our apps custom components/widgets(remember code re usability is key)
-- - __lib/ui/styles__ : contains the different styles and components for our widgets (This is mainly Tshepo's folder).
-- __lib/services__ : contains our services that interact with supabase(connecting to auth and database services)
-- __lib/providers__ : contans providers for our state management. (auth and database functions)
-- __lib/utils__ : contains our utility funcions and helpers.
-- __lib/main.dart__ : main entry point of the application.
-- __lib/routes.dart__: this file contains our different pages and their routes(everytime you create a page define its route here)
+### Prerequisites
+
+Before running the Flutter app, ensure that you have the following prerequisites installed on your machine:
+
+1. Flutter SDK - Download and install the Flutter SDK from the official Flutter website: [1].
+2. Android Studio or Visual Studio Code - Install either Android Studio or Visual Studio Code as your preferred integrated development environment (IDE).
+3. Emulator or Physical Device - Set up an emulator or connect a physical device for running the app.
+
+### Steps to Run the Flutter App
+
+Once you have met the prerequisites, follow these steps to run the Flutter app:
+
+1. Clone the project repository from the source code repository.
+2. Open the project in your preferred IDE (Android Studio or Visual Studio Code).
+3. Open a terminal within the IDE or navigate to the project directory using the command line.
+4. Run the command `flutter pub get` to fetch the project dependencies.
+5. Start the emulator or connect your physical device.
+6. Run the command `flutter run` to launch the app on the desired emulator or device.
+
+Congratulations! You have successfully set up and run the Flutter app.
+
+## JSON Server
+
+The JSON-server running at https://api.jsonbin.io/v3/b/667dd349ad19ca34f87fcd77 hold the information being used to emulate BHC data.

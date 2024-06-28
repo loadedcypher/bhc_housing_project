@@ -28,9 +28,24 @@ class _ServiceRequestsState extends State<ServiceRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Service Requests'),
-        automaticallyImplyLeading: false,
+        foregroundColor: Colors.white,
+        flexibleSpace: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'lib/ui/assets/serviceRequestTopBar.png', // Replace with your image asset path
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              height: 300, // Increase the height to your desired size
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,7 +56,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
             return _buildServiceRequestCard(
               context,
               type: request.type,
-              description: request.description ?? 'No description provided',
+              description: request.description,
               status: request.status,
               referenceNumber: request.reference_number,
             );
@@ -63,8 +78,8 @@ class _ServiceRequestsState extends State<ServiceRequests> {
             });
           }
         },
-        backgroundColor: const Color(0xFFAC2324),
-        child: const Icon(Icons.build),
+        backgroundColor: const Color(0xFFFAA21B),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -76,11 +91,29 @@ class _ServiceRequestsState extends State<ServiceRequests> {
     required String status,
     required String referenceNumber,
   }) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+ return Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12.0),
+    ),
+    elevation: 6.0,
+    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: LinearGradient(
+          colors: [Colors.white, Colors.grey.shade100],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 3,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
-      elevation: 4.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -88,10 +121,17 @@ class _ServiceRequestsState extends State<ServiceRequests> {
           children: [
             Row(
               children: [
-                const Icon(
-                  Icons.warning,
-                  size: 40.0,
-                  color: Color(0xFFAC2324),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFAC2324).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: const Icon(
+                    Icons.build,
+                    size: 32.0,
+                    color: Color(0xFFAC2324),
+                  ),
                 ),
                 const SizedBox(width: 16.0),
                 Expanded(
@@ -103,34 +143,47 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                         style: const TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 8.0),
+                      const SizedBox(height: 4.0),
                       Text(
                         description,
-                        style: const TextStyle(fontSize: 12.0),
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black54,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16.0),
+            const Divider(
+              color: Colors.black26,
+              height: 24.0,
+            ),
             Text(
               'Status: $status',
               style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 127, 127, 127),
               ),
             ),
             const SizedBox(height: 8.0),
             Text(
               'Reference Number: $referenceNumber',
-              style: const TextStyle(fontSize: 12.0),
+              style: const TextStyle(
+                fontSize: 12.0,
+                color: Colors.black54,
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }
+  }
+

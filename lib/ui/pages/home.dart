@@ -114,17 +114,27 @@ class _HomeState extends State<Home> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("BHC House Management"),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => _logout(context),
-          ),
-        ],
+  title: const Text(
+    "BHC House Management",
+    style: TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  centerTitle: true,
+  automaticallyImplyLeading: false,
+  actions: [
+    IconButton(
+      icon: const Icon(
+        Icons.logout,
+        size: 24.0,
       ),
+      onPressed: () => _logout(context),
+    ),
+  ],
+),
       body: IndexedStack(
         index: _selectedIndex,
         children: _pages,

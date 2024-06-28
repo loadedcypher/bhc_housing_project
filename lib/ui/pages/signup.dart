@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  const SignupScreen({Key? key}) : super(key: key);
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -21,12 +21,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _userTypeController = TextEditingController();
   final _customerNumberController = TextEditingController();
 
   bool _passwordVisible = false;
-  bool _isCurrentTenant = false;
   bool _confirmPasswordVisible = false;
+  bool _isCurrentTenant = false;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -193,6 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   labelText: 'User Type',
                   border: OutlineInputBorder(),
                 ),
+                value: _isCurrentTenant ? 'Current_Tenant' : null,
                 items: ['Current_Tenant', 'Prospective_Client']
                     .map((type) =>
                         DropdownMenuItem(value: type, child: Text(type)))
@@ -200,12 +200,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 validator: (value) => value == null ? 'Select user type' : null,
                 onChanged: (value) {
                   setState(() {
-                    _userTypeController.text = value.toString();
                     _isCurrentTenant = value == 'current_tenant';
                   });
                 },
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               Visibility(
                 visible: _isCurrentTenant,
                 child: TextFormField(
@@ -229,7 +228,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       final databaseProvider =
                           Provider.of<DatabaseProvider>(context, listen: false);
                       final response = await authProvider.signUpWithEmail(
-                        _emailController.text,
+                        _emailController.text.trim(),
                         _passwordController.text,
                       );
 
@@ -241,12 +240,14 @@ class _SignupScreenState extends State<SignupScreen> {
                           email: _emailController.text,
                           omangNumber: _omangNumberController.text,
                           phoneNumber: _phoneNumberController.text,
-                          userType: _userTypeController.text,
+                          userType: _isCurrentTenant
+                              ? 'Current_Tenant'
+                              : 'Prospective_Client',
                           customerNumber: _isCurrentTenant
                               ? _customerNumberController.text
                               : null,
                         );
-                        databaseProvider.addUser(user);
+                        await databaseProvider.addUser(user);
                       }
 
                       Navigator.pushReplacementNamed(context, '/login');
@@ -259,13 +260,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      WidgetStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(WidgetState.pressed)) {
+                      MaterialStateProperty.resolveWith<Color>((states) {
+                    if (states.contains(MaterialState.pressed)) {
                       return const Color(0xFFFAA21B); // Color when pressed
                     }
                     return const Color(0xFFAC2324); // Default color
                   }),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

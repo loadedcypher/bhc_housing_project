@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -14,7 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
 
   bool _passwordVisible = false;
@@ -138,13 +137,13 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: _signIn,
                   style: ButtonStyle(
                     backgroundColor:
-                        WidgetStateProperty.resolveWith<Color>((states) {
-                      if (states.contains(WidgetState.pressed)) {
+                        MaterialStateProperty.resolveWith<Color>((states) {
+                      if (states.contains(MaterialState.pressed)) {
                         return const Color(0xFFFAA21B); // Color when pressed
                       }
                       return const Color(0xFFAC2324); // Default color
                     }),
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),

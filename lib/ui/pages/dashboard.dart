@@ -99,21 +99,27 @@ class _DashboardState extends State<Dashboard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            'Welcome, ',
+          Text(
+            'Dumela ',
             style: TextStyle(
-              fontSize: 24.0,
-              color: Color(0xFF1E1E1E),
+              color: Colors.black,
+              fontSize: 18.0,
             ),
-            children: [
-              const TextSpan(text: 'Dumela '),
-              TextSpan(
-                text: name.isNotEmpty ? name : widget.userName,
-                style: const TextStyle(
-                    color: Color(0xFFAC2324), fontWeight: FontWeight.bold),
-              ),
-              const TextSpan(text: '!'),
-            ],
+          ),
+          Text(
+            name.isNotEmpty ? name : widget.userName,
+            style: TextStyle(
+              color: Color(0xFFAC2324),
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+            ),
+          ),
+          Text(
+            '!',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+            ),
           ),
         ],
       ),
@@ -131,7 +137,7 @@ class _DashboardState extends State<Dashboard> {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              image: const DecorationImage(
+              image: DecorationImage(
                 image: AssetImage('lib/ui/assets/house.png'),
                 fit: BoxFit.cover,
               ),
@@ -157,8 +163,8 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 85.0),
-                const Text(
+                SizedBox(height: 85.0),
+                Text(
                   'Property Details',
                   style: TextStyle(
                     fontSize: 16.0,
@@ -166,12 +172,12 @@ class _DashboardState extends State<Dashboard> {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 5.0),
+                SizedBox(height: 5.0),
                 Text(
-                  'Plot Number: ${widget.propertyPlotNumber}\n'
-                  'Region: ${widget.propertyRegion}\n'
-                  'Location: ${widget.propertyLocation}',
-                  style: const TextStyle(
+                  'Plot Number: ${widget.propertyPlotNumber ?? ''}\n'
+                  'Region: ${widget.propertyRegion ?? ''}\n'
+                  'Location: ${widget.propertyLocation ?? ''}',
+                  style: TextStyle(
                     fontSize: 12.0,
                     color: Colors.white,
                   ),
@@ -187,7 +193,7 @@ class _DashboardState extends State<Dashboard> {
   Widget _buildDividerWithText(String text) {
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Expanded(
               child: Divider(
@@ -201,8 +207,8 @@ class _DashboardState extends State<Dashboard> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             text,
-            textAlign: TextAlign.right, // Set the text alignment to right
-            style: const TextStyle(
+            textAlign: TextAlign.right,
+            style: TextStyle(
               color: Color.fromRGBO(54, 60, 69, 1),
               fontSize: 20.0,
               fontWeight: FontWeight.normal,
@@ -221,7 +227,7 @@ class _DashboardState extends State<Dashboard> {
           iconPath: 'lib/ui/assets/generalEnquiries.png',
           destination: GeneralEnquiries(),
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/serviceRequest.png',
@@ -230,17 +236,17 @@ class _DashboardState extends State<Dashboard> {
             serviceRequests: [],
           ),
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/statements.png',
           destination: StatementsScreen(customerNumber: customerNumber),
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/explore.png',
-          destination: const ExplorePage(),
+          destination: ExplorePage(),
         ),
       ],
     );

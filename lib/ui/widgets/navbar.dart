@@ -15,37 +15,61 @@ class RoleBasedNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<BottomNavigationBarItem> items = [
-      BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
+      const BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard), label: 'Dashboard'),
+      const BottomNavigationBarItem(icon: Icon(Icons.help), label: 'Help'),
     ];
 
     if (userType == 'prospective_client') {
-      items.addAll([
+      items = [
+        items[0],
         const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Explore'),
         const BottomNavigationBarItem(
             icon: Icon(Icons.info), label: 'General Enquiries'),
-      ]);
+      ];
     } else if (userType == 'current_tenant') {
-      items.addAll([
+      items = [
+        items[0],
         const BottomNavigationBarItem(
-            icon: Icon(Icons.edit_document), label: 'Statements'),
+            icon: Icon(Icons.edit_document), label: 'Edit Document'),
         const BottomNavigationBarItem(
             icon: Icon(Icons.warning), label: 'Service Requests'),
         const BottomNavigationBarItem(
-            icon: Icon(Icons.info), label: 'General Enquiries')
-      ]);
+            icon: Icon(Icons.info), label: 'General Enquiries'),
+      ];
     }
 
-    // Ensure at least 2 items to prevent assertion error
-    if (items.length < 2) {
-      return const Text('Loading....');
-    }
-
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      items: items,
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.amber[800],
-      onTap: onTap,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: items,
+            currentIndex: currentIndex,
+            selectedItemColor: Colors.amber[800],
+            unselectedItemColor: Colors.grey,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            onTap: onTap,
+          ),
+        ),
+      ),
     );
   }
 }

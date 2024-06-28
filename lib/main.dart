@@ -5,6 +5,7 @@ import 'package:bhc_housing_project/services/supabase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -15,7 +16,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -23,7 +23,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => DatabaseProvider())
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          textTheme: GoogleFonts.poppinsTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
         initialRoute: AppRoutes.splash,
         onGenerateRoute: AppRoutes.generateRoute,
         debugShowCheckedModeBanner: false,

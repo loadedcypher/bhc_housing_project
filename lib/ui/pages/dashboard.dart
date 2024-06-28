@@ -26,6 +26,19 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   String customerNumber = "";
+  String name = ""; // Ensure this is initialized with an empty string
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCustomerDetails();
+  }
+
+  Future<void> fetchCustomerDetails() async {
+    await fetchCustomerName();
+    await fetchCustomerNumber();
+  }
+
   Future<void> fetchCustomerNumber() async {
     final user = SupabaseService.supabaseClient.auth.currentUser;
     if (user != null) {
@@ -38,6 +51,23 @@ class _DashboardState extends State<Dashboard> {
       if (mounted) {
         setState(() {
           customerNumber = response['customer_number'];
+        });
+      }
+    }
+  }
+
+  Future<void> fetchCustomerName() async {
+    final user = SupabaseService.supabaseClient.auth.currentUser;
+    if (user != null) {
+      final response = await SupabaseService.supabaseClient
+          .from('users')
+          .select('first_name')
+          .eq('id', user.id)
+          .single();
+      print(response);
+      if (mounted) {
+        setState(() {
+          name = response['first_name'];
         });
       }
     }
@@ -73,10 +103,11 @@ class _DashboardState extends State<Dashboard> {
             color: Color(0xFF1E1E1E),
           ),
           children: [
-            const TextSpan(text: 'Welcome, '),
+            const TextSpan(text: 'Dumela '),
             TextSpan(
-              text: widget.userName,
-              style: const TextStyle(color: Color(0xFFAC2324)),
+              text: name.isNotEmpty ? name : widget.userName,
+              style: const TextStyle(
+                  color: Color(0xFFAC2324), fontWeight: FontWeight.bold),
             ),
             const TextSpan(text: '!'),
           ],

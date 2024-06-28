@@ -18,67 +18,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String userType = '';
-  String customerNumber = "";
   int _selectedIndex = 0;
-
-  void _logout(BuildContext context) async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-    await authProvider.logout();
-
-    Navigator.pushReplacementNamed(context, '/login');
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Logged out")),
-    );
-  }
+  late Future<Map<String, dynamic>> _userDataFuture;
 
   @override
   void initState() {
     super.initState();
-    fetchUserType();
-    fetchCustomerNumber();
+    _userDataFuture = _fetchUserData();
     SupabaseService.supabaseClient.auth.onAuthStateChange.listen((data) {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.signedOut) {
-        fetchUserType();
-        fetchCustomerNumber();
+        setState(() {
+          _userDataFuture = _fetchUserData();
+        });
       }
     });
   }
 
-  Future<void> fetchUserType() async {
+  Future<Map<String, dynamic>> _fetchUserData() async {
     final user = SupabaseService.supabaseClient.auth.currentUser;
     if (user != null) {
       final response = await SupabaseService.supabaseClient
           .from('users')
-          .select('user_type')
+          .select('user_type, customer_number')
           .eq('id', user.id)
           .single();
-      if (mounted) {
-        setState(() {
-          userType = response['user_type'];
-        });
-      }
+      return {
+        'userType': response['user_type'],
+        'customerNumber': response['customer_number'] ?? '',
+      };
     }
-  }
-
-  Future<void> fetchCustomerNumber() async {
-    final user = SupabaseService.supabaseClient.auth.currentUser;
-    if (user != null) {
-      final response = await SupabaseService.supabaseClient
-          .from('users')
-          .select('customer_number')
-          .eq('id', user.id)
-          .single();
-      print(response);
-      if (mounted) {
-        setState(() {
-          customerNumber = response['customer_number']!;
-        });
-      }
-    }
+    return {'userType': '', 'customerNumber': ''};
   }
 
   void _onItemTapped(int index) {
@@ -89,33 +59,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _pagesProspectiveClient = [
-      Dashboard(),
-      ExplorePage(),
-      GeneralEnquiries(),
-    ];
-
-    List<Widget> _pagesCurrentTenant = [
-      Dashboard(),
-      StatementsScreen(customerNumber: customerNumber),
-      ServiceRequests(serviceRequests: [], onAddRequest: (ServiceRequest) {}),
-      GeneralEnquiries()
-    ];
-
-    List<Widget> _pages = userType == 'prospective_client'
-        ? _pagesProspectiveClient
-        : _pagesCurrentTenant;
-
-    if (_pages.length < 2) {
-      _pages = [
-        const Center(child: Text('Error Page')),
-        const Center(child: Text('Help Page')),
-      ];
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("BHC House Management"),
+        title: const Text(
+          "BHC House Management",
+          style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFAC2324)),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
@@ -125,15 +77,71 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: _userDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          final userData = snapshot.data!;
+          final userType = userData['userType'];
+          final customerNumber = userData['customerNumber'];
+
+          List<Widget> pages = _getPages(userType, customerNumber);
+
+          return IndexedStack(
+            index: _selectedIndex,
+            children: pages,
+          );
+        },
       ),
-      bottomNavigationBar: RoleBasedNavBar(
-        userType: userType,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      bottomNavigationBar: FutureBuilder<Map<String, dynamic>>(
+        future: _userDataFuture,
+        builder: (context, snapshot) {
+          String userType = snapshot.data?['userType'] ?? '';
+          return RoleBasedNavBar(
+            userType: userType,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          );
+        },
       ),
+    );
+  }
+
+  List<Widget> _getPages(String userType, String customerNumber) {
+    if (userType == 'prospective_client') {
+      return [
+        Dashboard(),
+        ExplorePage(),
+        GeneralEnquiries(),
+      ];
+    } else if (userType == 'current_tenant') {
+      return [
+        Dashboard(),
+        StatementsScreen(customerNumber: customerNumber),
+        ServiceRequests(serviceRequests: [], onAddRequest: (ServiceRequest) {}),
+        GeneralEnquiries()
+      ];
+    } else {
+      return [
+        const Center(child: Text('Error Page')),
+        const Center(child: Text('Help Page')),
+      ];
+    }
+  }
+
+  void _logout(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.logout();
+    Navigator.pushReplacementNamed(context, '/login');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Logged out")),
     );
   }
 }

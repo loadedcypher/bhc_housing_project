@@ -2,12 +2,14 @@ class Property {
   final int propertyId;
   final String location;
   final String availabilityType;
+  final String? imageUrl; // Add this line
   final HouseType houseType;
 
   Property({
     required this.propertyId,
     required this.location,
     required this.availabilityType,
+    required this.imageUrl, // Add this line
     required this.houseType,
   });
 
@@ -20,6 +22,7 @@ class Property {
       propertyId: json['property_id'] ?? 0,
       location: json['location'] ?? '',
       availabilityType: json['availability_type'] ?? '',
+      imageUrl: json['image_url'] ?? '', // Add this line
       houseType: HouseType.fromJson(json['house_type'] as Map<String, dynamic>),
     );
   }

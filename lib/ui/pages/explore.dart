@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:bhc_housing_project/models/property.dart';
 import 'package:bhc_housing_project/services/api_service.dart';
 import 'package:bhc_housing_project/ui/pages/property_detail.dart';
-import 'package:flutter/material.dart';
 
 class ExplorePage extends StatefulWidget {
-  const ExplorePage({super.key});
+  const ExplorePage({Key? key});
 
   @override
   _ExplorePageState createState() => _ExplorePageState();
@@ -36,8 +36,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Explore'),
-        automaticallyImplyLeading: false,
+        title: const Text('Explore'), // App bar background color
         actions: [
           DropdownButton<String>(
             value: selectedFilter,
@@ -74,12 +73,8 @@ class _ExplorePageState extends State<ExplorePage> {
                 return Card(
                   margin: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 16.0),
-                  child: ListTile(
-                    title: Text(property.houseType.houseType,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(
-                        '${property.houseType.category} - ${property.availabilityType.capitalize()}'),
-                    trailing: const Icon(Icons.arrow_forward),
+                  elevation: 4,
+                  child: InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -89,6 +84,56 @@ class _ExplorePageState extends State<ExplorePage> {
                         ),
                       );
                     },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Image.network(
+                            property.imageUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(Icons.error),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                property.houseType.houseType,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Color(0xFFAC2324), // Title color
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${property.houseType.category} - ${property.availabilityType.capitalize()}',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                property.location,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

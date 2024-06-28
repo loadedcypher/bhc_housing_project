@@ -19,8 +19,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _userTypeController = TextEditingController();
+  final _customerNumberController = TextEditingController();
 
   bool _passwordVisible = false;
+  bool _isCurrentTenant = false;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -31,10 +33,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title:
-              const Text('Signup', style: TextStyle(color: Color(0xFFAC2324)))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -155,8 +153,25 @@ class _SignupScreenState extends State<SignupScreen> {
                     .toList(),
                 validator: (value) => value == null ? 'Select user type' : null,
                 onChanged: (value) {
-                  _userTypeController.text = value.toString();
+                  setState(() {
+                    _userTypeController.text = value.toString();
+                    _isCurrentTenant = value == 'current_tenant';
+                  });
                 },
+              ),
+              SizedBox(height: 12.0),
+              Visibility(
+                visible: _isCurrentTenant,
+                child: TextFormField(
+                  controller: _customerNumberController,
+                  decoration: InputDecoration(
+                    labelText: 'Customer Number',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) => _isCurrentTenant && value!.isEmpty
+                      ? 'Enter your customer number'
+                      : null,
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -181,11 +196,14 @@ class _SignupScreenState extends State<SignupScreen> {
                           omangNumber: _omangNumberController.text,
                           phoneNumber: _phoneNumberController.text,
                           userType: _userTypeController.text,
+                          customerNumber: _isCurrentTenant
+                              ? _customerNumberController.text
+                              : null,
                         );
                         databaseProvider.addUser(user);
                       }
 
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/login');
                     } catch (error) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Signup failed: $error')),

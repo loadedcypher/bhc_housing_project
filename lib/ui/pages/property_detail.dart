@@ -1,7 +1,7 @@
-import 'package:bhc_housing_project/ui/widgets/CompanyLeaseApplicationForm.dart';
-import 'package:bhc_housing_project/ui/widgets/IndividualLeaseApplicationForm.dart';
 import 'package:flutter/material.dart';
 import 'package:bhc_housing_project/models/property.dart';
+import 'package:bhc_housing_project/ui/widgets/CompanyLeaseApplicationForm.dart';
+import 'package:bhc_housing_project/ui/widgets/IndividualLeaseApplicationForm.dart';
 
 class PropertyDetailScreen extends StatelessWidget {
   final Property property;
@@ -13,20 +13,49 @@ class PropertyDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(property.houseType.houseType),
+        title: Text(
+          property.houseType.houseType,
+          style: TextStyle(
+            color: Color(0xFFAC2324), // Title color
+          ),
+        ), // App bar background color
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDetailSection(),
-              const SizedBox(height: 20),
-              _buildApplyButton(context),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImageSection(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildDetailSection(),
+                  const SizedBox(height: 20),
+                  _buildApplyButton(context),
+                ],
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildImageSection() {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Image.network(
+        property.imageUrl!,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[300],
+            child: const Center(
+              child: Icon(Icons.error, size: 50, color: Colors.grey),
+            ),
+          );
+        },
       ),
     );
   }
@@ -83,9 +112,13 @@ class PropertyDetailScreen extends StatelessWidget {
           onPressed: () {
             showIndividualLeaseApplicationDialog(context);
           },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFAC2324),
+              foregroundColor: Color(0xFFFAA21B) // Button background color
+              ),
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply for this Individualy',
+            child: Text('Apply for this Individually',
                 style: TextStyle(fontSize: 16)),
           ),
         ),
@@ -96,6 +129,10 @@ class PropertyDetailScreen extends StatelessWidget {
           onPressed: () {
             showCompanyLeaseApplicationDialog(context);
           },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFAA21B),
+              foregroundColor: Color(0xFFAC2324) // Button background color
+              ),
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
             child: Text('Apply for this property as a Company',

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:bhc_housing_project/models/property.dart';
 import 'package:bhc_housing_project/ui/widgets/CompanyLeaseApplicationForm.dart';
+import 'package:bhc_housing_project/ui/widgets/CompanySaleApplicationForm.dart';
 import 'package:bhc_housing_project/ui/widgets/IndividualLeaseApplicationForm.dart';
+import 'package:bhc_housing_project/ui/widgets/IndividualSaleApplicationForm.dart';
+import 'package:flutter/material.dart';
+import 'package:bhc_housing_project/models/property.dart';
 
 class PropertyDetailScreen extends StatelessWidget {
   final Property property;
@@ -118,7 +122,7 @@ class PropertyDetailScreen extends StatelessWidget {
               ),
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply for this Individually',
+            child: Text('Apply To Rent as An Individualy',
                 style: TextStyle(fontSize: 16)),
           ),
         ),
@@ -135,7 +139,33 @@ class PropertyDetailScreen extends StatelessWidget {
               ),
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Text('Apply for this property as a Company',
+            child: Text('Apply to Rent as a Company',
+                style: TextStyle(fontSize: 16)),
+          ),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            showPersonalApplicationFormDialog(context);
+          },
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0),
+            child: Text('Apply to Buy as an Individual',
+                style: TextStyle(fontSize: 16)),
+          ),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            showCompanySalesApplicationFormDialog(context);
+          },
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0),
+            child: Text('Apply to Buy as a Company',
                 style: TextStyle(fontSize: 16)),
           ),
         ),

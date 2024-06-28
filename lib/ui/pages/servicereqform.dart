@@ -73,16 +73,52 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Service Request Submitted'),
-          content: Text(
-              'Your case has been logged with BHC. Your reference number is $referenceNumber. You will be assisted within 5 days.'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          title: const Text(
+            'Service Request Submitted',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFAC2324), // Adjust color to match your theme
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Your case has been logged with BHC.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                'Your reference number is $referenceNumber.',
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              const SizedBox(height: 8.0),
+              const Text(
+                'You will be assisted within 5 days.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ],
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pop(newRequest);
+                Navigator.of(context)
+                    .pop(newRequest); // Assuming you want to pop twice
               },
-              child: const Text('OK'),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFAC2324), // Adjust color to match your theme
+                ),
+              ),
             ),
           ],
         ),
@@ -93,19 +129,24 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('New Service Request'),
-        backgroundColor: const Color(0xFFAC2324),
-        foregroundColor: const Color(0xFFFFFFFF), // Accent color
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        foregroundColor: const Color.fromARGB(255, 0, 0, 0), // Accent color
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: ListView(
+            padding: const EdgeInsets.all(16.0),
             children: [
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Fault Type'),
+                decoration: const InputDecoration(
+                  labelText: 'Fault Type',
+                  border: OutlineInputBorder(),
+                ),
                 value: _selectedFaultType,
                 items: _faultDetails.keys.map((String type) {
                   return DropdownMenuItem<String>(
@@ -124,7 +165,10 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
               ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Fault Detail'),
+                decoration: const InputDecoration(
+                  labelText: 'Fault Detail',
+                  border: OutlineInputBorder(),
+                ),
                 value: _selectedFaultDetail,
                 items: _faultDetails[_selectedFaultType]?.map((String fault) {
                   return DropdownMenuItem<String>(
@@ -142,7 +186,10 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(
+                  labelText: 'Description',
+                  border: OutlineInputBorder(),
+                ),
                 maxLines: 4,
                 onSaved: (value) {
                   _description = value;
@@ -152,13 +199,36 @@ class _ServiceReqFormPageState extends State<ServiceReqFormPage> {
                     : null,
               ),
               const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFAC2324),
-                  foregroundColor: const Color(0xFFFFFFFF), // Button color
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: ElevatedButton(
+                  onPressed: _submitForm, // Replace with your actual function
+                  style: ButtonStyle(
+                    backgroundColor:
+                        WidgetStateProperty.resolveWith<Color>((states) {
+                      if (states.contains(WidgetState.pressed)) {
+                        return const Color(0xFFFAA21B); // Color when pressed
+                      }
+                      return const Color(0xFFAC2324); // Default color
+                    }),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
-                child: const Text('Submit'),
               ),
             ],
           ),

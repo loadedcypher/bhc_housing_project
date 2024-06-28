@@ -5,8 +5,22 @@ class GeneralEnquiries extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('General Enquiries'),
-        automaticallyImplyLeading: false,
+        foregroundColor: Colors.white,
+        flexibleSpace: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'lib/ui/assets/generalEnquiriesTopBar1.png', // Replace with your image asset path
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              height: 300, // Increase the height to your desired size
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -4,7 +4,6 @@ import 'package:bhc_housing_project/ui/pages/service_requests.dart';
 import 'package:bhc_housing_project/ui/pages/explore.dart';
 import 'package:bhc_housing_project/ui/pages/statements.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
   final String userName;
@@ -76,6 +75,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -96,22 +96,26 @@ class _DashboardState extends State<Dashboard> {
   Widget _buildGreeting() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: RichText(
-        text: TextSpan(
-          style: const TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF1E1E1E),
-          ),
-          children: [
-            const TextSpan(text: 'Dumela '),
-            TextSpan(
-              text: name.isNotEmpty ? name : widget.userName,
-              style: const TextStyle(
-                  color: Color(0xFFAC2324), fontWeight: FontWeight.bold),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            'Welcome, ',
+            style: TextStyle(
+              fontSize: 24.0,
+              color: Color(0xFF1E1E1E),
             ),
-            const TextSpan(text: '!'),
-          ],
-        ),
+            children: [
+              const TextSpan(text: 'Dumela '),
+              TextSpan(
+                text: name.isNotEmpty ? name : widget.userName,
+                style: const TextStyle(
+                    color: Color(0xFFAC2324), fontWeight: FontWeight.bold),
+              ),
+              const TextSpan(text: '!'),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -134,20 +138,35 @@ class _DashboardState extends State<Dashboard> {
             ),
             height: 200,
           ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withOpacity(0.8),
+                ],
+              ),
+            ),
+            height: 200,
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: 85.0),
                 const Text(
-                  'Your Property Details',
+                  'Property Details',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 5.0),
                 Text(
                   'Plot Number: ${widget.propertyPlotNumber}\n'
                   'Region: ${widget.propertyRegion}\n'
@@ -166,28 +185,28 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildDividerWithText(String text) {
-    return Row(
+    return Column(
       children: [
-        const Expanded(
-          child: Divider(
-            color: Colors.black,
-            height: 20,
-          ),
+        const Row(
+          children: [
+            Expanded(
+              child: Divider(
+                color: Color.fromRGBO(202, 196, 208, 1),
+                height: 20,
+              ),
+            ),
+          ],
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             text,
+            textAlign: TextAlign.right, // Set the text alignment to right
             style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+              color: Color.fromRGBO(54, 60, 69, 1),
+              fontSize: 20.0,
+              fontWeight: FontWeight.normal,
             ),
-          ),
-        ),
-        const Expanded(
-          child: Divider(
-            color: Colors.black,
-            height: 20,
           ),
         ),
       ],
@@ -202,7 +221,7 @@ class _DashboardState extends State<Dashboard> {
           iconPath: 'lib/ui/assets/generalEnquiries.png',
           destination: GeneralEnquiries(),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/serviceRequest.png',
@@ -211,17 +230,17 @@ class _DashboardState extends State<Dashboard> {
             serviceRequests: [],
           ),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/statements.png',
           destination: StatementsScreen(customerNumber: customerNumber),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 10.0),
         _buildServiceCard(
           context,
           iconPath: 'lib/ui/assets/explore.png',
-          destination: ExplorePage(),
+          destination: const ExplorePage(),
         ),
       ],
     );

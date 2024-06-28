@@ -23,11 +23,22 @@ class _StatementsScreenState extends State<StatementsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tenant Statement',
-          style: TextStyle(color: Color(0xFFFAA21B)),
+        foregroundColor: Colors.white,
+        flexibleSpace: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'lib/ui/assets/statementsTopBar.png', // Replace with your image asset path
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              height: 300, // Increase the height to your desired size
+            ),
+          ],
         ),
-        automaticallyImplyLeading: false,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: customerDetails,
